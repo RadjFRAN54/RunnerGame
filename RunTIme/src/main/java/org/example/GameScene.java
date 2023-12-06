@@ -5,7 +5,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import java.util.LinkedList;
 
 
 public class GameScene extends Scene {
@@ -15,40 +18,16 @@ public class GameScene extends Scene {
     protected int lifePoint;
     protected Rectangle2D camera;
     protected AnimationTimer timer;
-    protected Group root;
+    protected HBox root;
+    protected LinkedList ImageViewMember=new LinkedList<ImageView>();
 
-    //final int x=10;
-
-    public GameScene(Group root, String FileName, double sizeX, double sizeY, String Fileleft, String Fileright,Camera camera) {
+    public GameScene(HBox root, String FileName, double sizeX, double sizeY, String Fileleft, String Fileright, Camera camera) {
         super(root,sizeX,sizeY);
-        Group root1=new Group();
-
-        //this.scene= new Scene(pane, 600, 400, true);
-
         this.camera=camera.getCamera();
         this.lifePoint=3;
-
         this.BackGroundleft=  new StaticThing(Fileleft,sizeX,sizeY).getImageviev();
-
-        //this.BackGroundRight=new StaticThing(Fileright,this.BackGroundleft.getImageviev().getFitWidth(),this.BackGroundleft.getImageviev().getFitHeight());
         this.BackGroundRight=  new StaticThing(Fileleft,sizeX,sizeY).getImageviev();
-        //pane.getChildren().add(cat.getImageviev());
-        //this.BackGroundRight=bot;
-        root.getChildren().addAll(this.BackGroundleft,this.BackGroundRight);
-        //root1.getChildren().add(this.BackGroundleft);
-        //root1.getChildren().add(this.BackGroundRight);
-        //this.scene=new Scene(root1,1600,400);
         this.root=root;
-        this.timer = new AnimationTimer(){
-            @Override
-            public void handle(long time){
-                System.out.println(time);
-            };};
-
-
-
-//render methods
-
 
     }
 
@@ -61,15 +40,20 @@ public class GameScene extends Scene {
         return BackGroundRight;
     }
 
+    public LinkedList getImageViewMember() { /*Liste possédant tous les images à afficher*/
+        return ImageViewMember;
+    }
+
     public Scene getScene() {
         return scene;
     }
-    public ImageView render(double x, int y, ImageView sprite){
-        this.camera=new Camera(x,y,0).getCamera();
+    public ImageView render(double x, int y, ImageView sprite){/* Permet de créer une image qui découpe le sprite du background en fonction de la caméra*/
+        this.camera=new Camera(x%1280,y,0).getCamera();
         sprite.setViewport(this.camera);
+        this.ImageViewMember.add(sprite);
         return sprite;
     }
-    public void NumberOfLives(Pane pane,double lifePoint){
+    public void NumberOfLives(Pane pane,double lifePoint){ /*Permet d'afficher le nombre de lifepoint du heros*/
         String heart="file:///C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/heart.png";
 
         switch ((int) lifePoint){
@@ -109,17 +93,14 @@ public class GameScene extends Scene {
                 break;
         }
     }
-    public void update(long time){
-        AnimationTimer time2 = new AnimationTimer(){
+    public void update(long time){ /*Pas utiliser pour l'instant */
+        /*AnimationTimer time2 = new AnimationTimer(){
             @Override
             public void handle(long time){
-                System.out.println(time);
-                System.out.println("b");
+
                 //new Hero(name2);
             };};
-        //new GameScene(this.root,).render;
-        //double vx=(ax+km*(this.x-SizeXHeros))/fm;
-        //this.x=this.x+vx*(time);
+        */
 
     }
 

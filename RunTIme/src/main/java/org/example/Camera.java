@@ -11,25 +11,35 @@ public class Camera {
     final int SizeXScene=600;
     final int SizeYScene=300;
     //final int SizeXHeros=75;
-    final int SizeXHeros=34;
+    final int SizeXHeros2=47;
+    final int SizeXHeros=40;
     //final int SizeYHeros=100;
     final int SizeYHeros=66;
-    final int km=1;
-    final double fm=1.2;
+    final double km=0.00001;
+    final double fm=0.0006;
     //final int ax=1;
     protected double vx=0;
+    protected double timepre;
+    private int i;
+
 
 
 
     public Camera(double x, int y,int choix) {
         this.x = x;
         this.y = y;
-        if (choix==0){ // On souhaite créer une camera pour une Scène
-            this.camera=new Rectangle2D(x,y,SizeXScene,SizeYScene);
+        switch (choix){
+            case 0: /*On souhaite créer une camera pour une Scène */
+                this.camera=new Rectangle2D(x,y,SizeXScene,SizeYScene);
+                break;
+            case 1:/*On souhaite créer une camera pour les premières frames du heros*/
+                this.camera=new Rectangle2D(x,y,SizeXHeros,SizeYHeros);
+                break;
+            case 2:
+                this.camera=new Rectangle2D(x,y,SizeXHeros2,SizeYHeros);
         }
-        else{
-            this.camera=new Rectangle2D(x,y,SizeXHeros,SizeYHeros);
-        }
+
+
     }
 
     @Override
@@ -41,17 +51,19 @@ public class Camera {
     }
 
     public void update(long time){
-        AnimationTimer time2 = new AnimationTimer(){
-            @Override
-            public void handle(long time){
-                //new Hero(name2);
-            };};
+        if (this.i==0){
+            this.timepre=time;
+            this.i++;
+        }
+        else{
+            double dt=(time-timepre)*1E-9;
+            double ax=km*(this.x)+fm*this.vx;
+            this.vx=this.vx+ax*dt;
+            this.x=this.x+vx*(dt);
+        }
 
-        double ax=km*(SizeXHeros-this.x)+fm*this.vx;
-        this.vx=this.vx+ax*time;
-        this.x=this.x+vx*(time);
 
-        //System.out.println("a");
+        System.out.println(this.x);
     }
 
     public double getX() {

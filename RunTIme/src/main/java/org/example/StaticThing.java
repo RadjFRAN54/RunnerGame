@@ -17,10 +17,8 @@ public class StaticThing {
         Image spriteSheet=new Image(FileName);
         ImageView sprite = new ImageView(spriteSheet);
         sprite.setX(sizeX);
-
         sprite.setY(sizeY);
         this.imageviev=sprite;
-
     }
 
 

@@ -9,36 +9,40 @@ public abstract class AnimatedThing {
     ImageView sprite;
     protected int attitude;
     protected int index;
-    protected double duration;
+    protected long duration;
     protected double size;
     protected double offset;
     protected AnimationTimer timer;
-    //final String name2="file:///C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/heros.png";
+
     final String altair="file:///C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/altair.png";
     final ImageView SpriteSheet= new StaticThing(altair,0,0).getImageviev();
-    //final ImageView SpriteSheet2=new StaticThing(altair,0,0).getImageviev();
+
     public AnimatedThing(String FileName) {
         this.sprite=SpriteSheet;
         this.sprite.setViewport(new Camera(10,0,1).getCamera());
         this.index=0;
     }
 
-    public void update(long time){
-       /* this.timer = new AnimationTimer(){
-            @Override
-            public void handle(long time){
-                System.out.println(time);
-                System.out.println("b");
-                //new Hero(name2);
-            };};*/
-        System.out.println(time);
+    public void update(long time)  {
+
         this.index++;
         this.sprite=SpriteSheet;
-        //this.sprite.setViewport(new Camera((index%6)*85,0,1).getCamera());
-        this.sprite.setViewport(new Camera((index%8)*46,66,1).getCamera());
+        //Les différentes frames du héros ne possède pas la même hitbox
+        switch (index%8){
+            case 0, 1:
+                this.sprite.setViewport(new Camera((index%8)*40,66,1).getCamera());
+                break;
+            case 2, 3, 6, 7:
+                this.sprite.setViewport(new Camera((index%8)*43+(index%8)-1,66,2).getCamera());
+                break;
+            case  4, 5:
+                this.sprite.setViewport(new Camera((index%8)*44+(index%8)-1,66,1).getCamera());
+                break;
 
+        }
+
+        this.duration=time;
         new Hero(altair);
-        //System.out.println("a");
     }
     public ImageView getSprite() {
         return sprite;
