@@ -44,10 +44,10 @@ public class Main3 extends Application {
 
         primaryStage.show();
 
-        AnimationTimer timer = new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() { //Création d'un timer
             @Override
             public void handle(long now) {
-                    //System.out.println(now);
+
                 root2.getChildren().removeAll(h.getSprite());/*Permet d'éviter un problème d'héritage lié à heros*/
                 camera.update(now);
                 h.update(now);
@@ -59,11 +59,8 @@ public class Main3 extends Application {
                 root2.getChildren().add(h.getSprite());
 
                 k[0] = k[0] +1;
-
                 }
             };
-
-
             timer.start();
 
 
@@ -73,8 +70,6 @@ public class Main3 extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        //GameScene a=new GameScene(1,2,"C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/desert.png",200,300,"C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/desert.png","C:/Users/Radji/Downloads/Ressources audio et image pour le runner-20231128/img/desert.png");
-
 
     }
 
